@@ -1,0 +1,70 @@
+class Solution {
+public:
+
+    void po(vector<int> &a){
+
+        int i=0; 
+
+        while(i<31){
+            a.push_back(1LL<<i);
+            i++;
+        }
+
+    }
+
+    int mul (int u , int v , vector<int>a){
+        int x =  1000000007;
+        long long int ans = 1;
+        
+        
+        for(int i=u ; i<=v ; i++){
+            ans = ((ans%x)*(a[i]%x))%x ;
+        }
+
+        return ans ;
+    }
+
+
+    vector<int> productQueries(int n, vector<vector<int>>& v) {
+        
+       vector<int> power;
+
+       po(power); 
+
+
+      vector< int>ans;
+
+      int pos =0 ;
+      int sum = 0;
+      for(int i = 0 ; i<power.size() ; i++ ){
+        sum+=power[i];
+        if(sum>=n){
+            pos =i ;
+            break;
+        }
+      }
+
+      vector<int>num ;
+
+        sum =0 ;
+
+      for(int i =pos; i>=0 ; i--){
+        sum += power[i];
+        if(sum<=n){
+            num.push_back(power[i]);
+        }else {
+            sum -=power[i];
+        }
+      }
+      reverse(num.begin(), num.end());
+      
+     
+     for(auto u :v){
+        int x = mul(u[0], u.back(), num);
+        ans.push_back(x);
+      }
+    
+    return ans ; 
+
+    }
+};
