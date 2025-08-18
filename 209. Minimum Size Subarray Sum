@@ -1,0 +1,43 @@
+class Solution {
+public:
+    
+    int bina(vector<int>&a, int target , int i){
+        int l = i ; 
+        int r = a.size()-1;
+        int result = -1;
+        while(l<=r){
+
+            int mid = (l+r)/2;
+
+            if(a[mid] - a[i-1] >= target){
+                r = mid-1;
+                result = mid;
+            } else 
+
+                l =mid+1;
+            
+        }
+
+        return result ;
+
+    }
+
+    int minSubArrayLen(int target, vector<int>& nums) {
+        
+        int ans = INT_MAX;
+
+        vector<int>pre;
+        pre.push_back(0);
+
+        for(auto u: nums)
+            pre.push_back(pre.back()+u);
+
+        for(int i =1; i<pre.size() ; i++){
+            int x= bina(pre, target, i);
+            if(x>=0)
+            ans = min(ans , (x-i +1));
+        }    
+        
+        return (ans == INT_MAX ) ? 0 :ans ;
+    }
+};
