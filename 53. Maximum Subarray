@@ -1,0 +1,40 @@
+class Solution {
+public:
+
+    int mcsa (vector <int> &a,  int s, int e, int mid){
+        
+        int sum =0 , left_sum = INT_MIN ;
+
+        for(int i = mid; i>=s ; i--){
+            sum+=a[i];
+            left_sum = max(left_sum , sum);
+        }
+
+        sum =0;
+        int right_sum = INT_MIN ;
+
+        for(int i= mid+1 ; i<=e; i++){
+            sum+=a[i];
+            right_sum = max(right_sum, sum);
+        }
+
+        return left_sum + right_sum ;
+
+    }
+
+    int maxSub(int s , int e , vector<int>&v){
+        int mid = (s+e)/2;
+
+        if(s==e)
+            return v[s];
+        int left = maxSub(s, mid, v);
+        int right = maxSub(mid+1, e , v);
+        int cross = mcsa(v, s, e, mid);
+
+        return max({left, right, cross});         
+    }
+
+    int maxSubArray(vector<int>& nums) {
+        return maxSub(0, nums.size()-1, nums);
+    }
+};
