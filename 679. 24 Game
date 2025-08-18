@@ -1,0 +1,65 @@
+class Solution {
+public:
+    //Calculating all possible oppration 
+    vector<double>all_op(double a , double b){
+        vector<double>arr ;
+        arr.push_back(a+b);
+        arr.push_back(a-b);
+        arr.push_back(b-a);
+        arr.push_back(a*b);
+        if(b){
+            arr.push_back(a/b);
+        }
+        if(a){
+            arr.push_back(b/a);
+        }
+
+        return arr;
+    }
+
+    bool is_possible(vector<double>v){
+        if(v.size()==1){
+            if(abs(24.0-v[0])<= FLT_EPSILON)
+                return true;
+        }
+
+        for(int i=0 ; i<v.size() ; i++){
+
+            for(int j= 0 ; j<v.size(); j++){
+
+                if(i==j)
+                    continue;
+
+                double a =v[i];
+                double b =v[j];
+
+                vector<double> op =  all_op(a,b);   
+
+                vector<double> next ;
+
+                for(auto u: op){
+                    next.clear();
+                    next.push_back(u);
+                    for(int k =0; k<v.size() ; k++){
+                        if(k!=i and k!=j)
+                            next.push_back(v[k]);
+                    }
+
+                    if(is_possible(next))
+                        return true ;
+
+                }
+
+
+            }
+
+        }
+        return false ;
+    }
+
+    bool judgePoint24(vector<int>& cards) {
+        vector<double> a(cards.begin(), cards.end());
+
+        return is_possible(a);
+    }
+};
