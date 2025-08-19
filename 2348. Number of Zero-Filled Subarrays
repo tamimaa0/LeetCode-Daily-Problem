@@ -1,0 +1,50 @@
+class Solution {
+public:
+
+    int 
+    long long zeroFilledSubarray(vector<int>& v) {
+        
+        vector<long long int>zero ;
+
+        long long int cnt = 1, cnt0 = 0;
+        for(int i= 1; i<v.size(); i++)
+        {
+            //Calculating  contiguous zero 
+            if(v[i-1]==v[i]  && v[i]==0){
+                cnt++;
+            } 
+            else 
+            {
+                if(cnt !=1)
+                zero.push_back(cnt);
+                cnt =1;
+            } 
+            // Number of zero 
+            if(v[i] == 0)
+                cnt0 ++;
+
+
+        }
+
+        if(v[0]== 0)
+            cnt0++;
+
+         if(cnt !=1)
+                zero.push_back(cnt);
+        
+        //for(auto u:zero )cout<<u<<" ";
+
+        //sort(zero.rbegin(), zero.rend());
+
+        long long int ans =0 ;
+
+        for(auto u : zero ){
+            /// Calculate without single one {0 , 0 , 0} ; [0, 0] = 2 and [0,0,0,] = 1  . Single [0] =3(calculate except this ) ; 
+            long long int n = ((u-1)*(u))/2;  
+            ans +=n;
+        }
+        
+    // Add "Single [0] =3(calculate except this )" this here 
+        return ans+cnt0 ;
+    }
+};
